@@ -6,8 +6,8 @@
         android:icon="@mipmap/ic_launcher"
         android:label="home_widgets_flutter">
         <receiver
-            android:name=".CounterWidget"
-            android:exported="false">
+            android:name="CounterWidget"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
