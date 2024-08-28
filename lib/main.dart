@@ -12,7 +12,8 @@ void main() async {
 Future<void> interactiveCallback(Uri? uri) async {
   // We check the host of the uri to determine which action should be triggered.
   if (uri?.host == 'increment') {
-    await _increment();
+    await 
+    ();
   } else if (uri?.host == 'clear') {
     await _clear();
   }

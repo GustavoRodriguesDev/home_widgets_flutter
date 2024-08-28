@@ -2,21 +2,20 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
     <application
+        android:label="home_widgets_flutter"
         android:name="${applicationName}"
-        android:icon="@mipmap/ic_launcher"
-        android:label="home_widgets_flutter">
+        android:icon="@mipmap/ic_launcher">
         <receiver
-            android:name="CounterWidget"
+            android:name="com.example.home_widgets_flutter.glance.CounterGlaceWidgetReceiver"
+            android:label="Glance"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
             </intent-filter>
-
             <meta-data
                 android:name="android.appwidget.provider"
-                android:resource="@xml/counter_widget_info" />
+                android:resource="@xml/counter_glace_widget" />
         </receiver>
-        <receiver android:name=".MyWidgetReceiver" />
 
         <activity
             android:name=".MainActivity"
