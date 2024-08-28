@@ -1,22 +1,12 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:home_widget/home_widget.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await HomeWidget.setAppGroupId('counterWidget.com');
   await HomeWidget.registerInteractivityCallback(interactiveCallback);
   runApp(const MyApp());
-}
-
-@pragma('vm:entry-point')
-Future<void> interactiveCallback(Uri? uri) async {
-  // We check the host of the uri to determine which action should be triggered.
-  if (uri?.host == 'increment') {
-    await 
-    ();
-  } else if (uri?.host == 'clear') {
-    await _clear();
-  }
 }
 
 const _countKey = 'counter';
@@ -26,6 +16,17 @@ Future<int> get _value async {
   return value!;
 }
 
+@pragma('vm:entry-point')
+Future<void> interactiveCallback(Uri? uri) async {
+  // We check the host of the uri to determine which action should be triggered.
+  if (uri?.host == 'increment') {
+    await _increment();
+  } else if (uri?.host == 'clear') {
+    await _clear();
+  }
+}
+
+/// Saves that new value
 Future<int> _increment() async {
   final oldValue = await _value;
   final newValue = oldValue + 1;
@@ -33,16 +34,22 @@ Future<int> _increment() async {
   return newValue;
 }
 
+/// Clears the saved Counter Value
 Future<void> _clear() async {
   await _sendAndUpdate(null);
 }
 
+/// Stores [value] in the Widget Configuration
 Future<void> _sendAndUpdate([int? value]) async {
   await HomeWidget.saveWidgetData(_countKey, value);
   await HomeWidget.updateWidget(
-    iOSName: 'CounterWidget',
     androidName: 'CounterWidgetProvider',
   );
+  if (Platform.isAndroid) {
+    await HomeWidget.updateWidget(
+      androidName: 'CounterGlaceWidgetReceiver',
+    );
+  }
 }
 
 class MyApp extends StatelessWidget {
