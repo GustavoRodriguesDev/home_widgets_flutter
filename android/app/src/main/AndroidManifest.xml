@@ -6,7 +6,7 @@
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <receiver
-            android:name="com.example.home_widgets_flutter.glance.CounterGlaceWidgetReceiver"
+            android:name="com.example.home_widgets_flutter.CounterGlaceWidgetReceiver"
             android:label="Glance"
             android:exported="true">
             <intent-filter>

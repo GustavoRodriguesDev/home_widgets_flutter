@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:home_widget/home_widget.dart';
 
@@ -42,14 +40,10 @@ Future<void> _clear() async {
 /// Stores [value] in the Widget Configuration
 Future<void> _sendAndUpdate([int? value]) async {
   await HomeWidget.saveWidgetData(_countKey, value);
+
   await HomeWidget.updateWidget(
-    androidName: 'CounterWidgetProvider',
+    androidName: 'CounterGlaceWidgetReceiver',
   );
-  if (Platform.isAndroid) {
-    await HomeWidget.updateWidget(
-      androidName: 'CounterGlaceWidgetReceiver',
-    );
-  }
 }
 
 class MyApp extends StatelessWidget {

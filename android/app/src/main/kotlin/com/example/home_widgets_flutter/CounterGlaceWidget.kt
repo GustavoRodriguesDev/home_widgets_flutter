@@ -22,7 +22,9 @@ import androidx.glance.layout.Row
 import androidx.glance.layout.Spacer
 import androidx.glance.layout.fillMaxSize
 import androidx.glance.layout.fillMaxWidth
+import androidx.glance.layout.height
 import androidx.glance.layout.padding
+import androidx.glance.layout.width
 import androidx.glance.text.FontWeight
 import androidx.glance.text.Text
 import androidx.glance.text.TextAlign
@@ -32,7 +34,7 @@ import com.example.home_widgets_flutter.IncrementAction
 import com.example.home_widgets_flutter.MainActivity
 import es.antonborri.home_widget.actionStartActivity
 
- class CounterGlanceWidget : GlanceAppWidget() {
+class CounterGlanceWidget : GlanceAppWidget() {
 
     // Needed for Updating
     override val stateDefinition = HomeWidgetGlanceStateDefinition()
@@ -48,7 +50,10 @@ import es.antonborri.home_widget.actionStartActivity
         val data = currentState.preferences
         val count = data.getInt("counter", 0)
 
-        Box(modifier = GlanceModifier.background(Color.White).padding(16.dp).clickable(onClick = actionStartActivity<MainActivity>(context))) {
+        Box(
+            modifier = GlanceModifier.background(Color.White).padding(16.dp)
+                .clickable(onClick = actionStartActivity<MainActivity>(context))
+        ) {
             Column(
                 modifier = GlanceModifier.fillMaxSize(),
                 verticalAlignment = Alignment.Vertical.CenterVertically,
@@ -60,26 +65,40 @@ import es.antonborri.home_widget.actionStartActivity
                 )
                 Text(
                     count.toString(),
-                    style = TextStyle(fontSize = 24.sp, fontWeight = FontWeight.Bold, textAlign = TextAlign.Center),
+                    style = TextStyle(
+                        fontSize = 24.sp,
+                        fontWeight = FontWeight.Bold,
+                        textAlign = TextAlign.Center
+                    ),
                 )
 
                 Spacer(GlanceModifier.defaultWeight())
 
-                Row (
-                    modifier = GlanceModifier.fillMaxWidth()
-                ){
+                Row(
+                    modifier = GlanceModifier.fillMaxWidth(),
+                    horizontalAlignment = Alignment.CenterHorizontally
 
-                    Box (modifier = GlanceModifier.clickable(onClick = actionRunCallback<ClearAction>()))
+                ) {
+                    Box(
+                        modifier = GlanceModifier.clickable(onClick = actionRunCallback<ClearAction>())
+                            .width(60.dp).height(60.dp),
+                        contentAlignment = Alignment.Center
+                    )
                     {
-                        Text(text = "-",
+                        Text(
+                            text = "-",
                             style = TextStyle(fontSize = 50.sp, textAlign = TextAlign.Center),
                         )
-
                     }
-                    Spacer(GlanceModifier.defaultWeight())
-                    Box (modifier = GlanceModifier.clickable(onClick = actionRunCallback<IncrementAction>()))
+                    Spacer(GlanceModifier.width(50.dp))
+                    Box(
+                        modifier = GlanceModifier.clickable(onClick = actionRunCallback<IncrementAction>())
+                            .width(60.dp).height(60.dp),
+                        contentAlignment = Alignment.Center
+                    )
                     {
-                        Text(text = "+",
+                        Text(
+                            text = "+",
                             style = TextStyle(fontSize = 50.sp, textAlign = TextAlign.Center),
                         )
 

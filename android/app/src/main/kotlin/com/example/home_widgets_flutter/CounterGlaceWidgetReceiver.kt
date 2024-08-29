@@ -1,4 +1,4 @@
-package com.example.home_widgets_flutter.glance
+package com.example.home_widgets_flutter
 
 import HomeWidgetGlanceWidgetReceiver
 import com.example.home_widgets_flutter.CounterGlanceWidget
