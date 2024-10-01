@@ -80,7 +80,9 @@ class CounterGlanceWidget : GlanceAppWidget() {
 
                 ) {
                     Box(
-                        modifier = GlanceModifier.clickable(onClick = actionRunCallback<ClearAction>())
+                        modifier = GlanceModifier.clickable(onClick = actionRunCallback<ClearAction>(
+//                            parameters: ActionPar
+                        ))
                             .width(60.dp).height(60.dp),
                         contentAlignment = Alignment.Center
                     )

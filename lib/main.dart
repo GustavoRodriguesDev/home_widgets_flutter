@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:home_widget/home_widget.dart';
 
@@ -7,43 +9,100 @@ void main() async {
   runApp(const MyApp());
 }
 
-const _countKey = 'counter';
-
-Future<int> get _value async {
-  final value = await HomeWidget.getWidgetData<int>(_countKey, defaultValue: 0);
-  return value!;
-}
-
 @pragma('vm:entry-point')
 Future<void> interactiveCallback(Uri? uri) async {
   // We check the host of the uri to determine which action should be triggered.
-  if (uri?.host == 'increment') {
-    await _increment();
-  } else if (uri?.host == 'clear') {
-    await _clear();
+  if (uri?.host == 'checkItem') {
+    checkItem();
   }
 }
 
-/// Saves that new value
-Future<int> _increment() async {
-  final oldValue = await _value;
-  final newValue = oldValue + 1;
-  await _sendAndUpdate(newValue);
-  return newValue;
+// Future<int> get _value async {
+//   final value = await HomeWidget.getWidgetData<int>(_countKey, defaultValue: 0);
+//   return value!;
+// }
+
+// Future<int> _increment() async {
+//   final oldValue = await _value;
+//   final newValue = oldValue + 1;
+//   await _sendAndUpdate(newValue);
+//   return newValue;
+// }
+
+const _countKey = 'task';
+
+Future<List<ItemTask>> fetchItensTasks() async {
+  try {
+    final value = await HomeWidget.getWidgetData<String>(
+      _countKey,
+    );
+
+    if (value == null) return [];
+    final newValue = jsonDecode(value);
+    final itens = newValue
+        .map<ItemTask>(
+          (e) => ItemTask(
+            isChecked: e['checked'],
+            name: e['name'],
+          ),
+        )
+        .toList();
+    return itens;
+  } catch (e) {
+    rethrow;
+  }
 }
 
-/// Clears the saved Counter Value
-Future<void> _clear() async {
-  await _sendAndUpdate(null);
+Future<void> checkItem(int index, bool isChecked) async {
+  List<ItemTask> itemList = await fetchItensTasks();
+  ItemTask item = itemList[index];
+  item = ItemTask(name: item.name, isChecked: isChecked);
+  itemList.removeAt(index);
+  itemList.insert(index, item);
+  itemList = [...itemList];
+  sendItensTasks(itemList);
 }
+
+Future<void> sendItensTasks(List<ItemTask> itens) async {
+  await _sendAndUpdate(
+    itens
+        .map(
+          (e) => {
+            'checked': e.isChecked,
+            'name': e.name,
+          },
+        )
+        .toList(),
+  );
+}
+
+/// Saves that new value
 
 /// Stores [value] in the Widget Configuration
-Future<void> _sendAndUpdate([int? value]) async {
-  await HomeWidget.saveWidgetData(_countKey, value);
+Future<void> _sendAndUpdate(List<Map<String, dynamic>> item) async {
+  await HomeWidget.saveWidgetData(_countKey, jsonEncode(item));
 
   await HomeWidget.updateWidget(
-    androidName: 'CounterGlaceWidgetReceiver',
+    androidName: 'ListviewGlanceWidgetReceiver',
   );
+}
+
+class TaskController extends ValueNotifier<List<ItemTask>> {
+  TaskController() : super([]);
+
+  Future<void> addItem(ItemTask itemTask) async {
+    final itemList = await fetchItensTasks();
+
+    itemList.add(itemTask);
+    value = [...value, itemTask];
+
+    sendItensTasks(value);
+  }
+
+  Future<void> getItens() async {
+    final itemList = await fetchItensTasks();
+    value = itemList;
+  }
 }
 
 class MyApp extends StatelessWidget {
@@ -72,9 +131,11 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
+  final controller = TaskController();
   @override
   void initState() {
     super.initState();
+    controller.getItens();
     WidgetsBinding.instance.addObserver(this);
   }
 
@@ -97,34 +158,94 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
     return Scaffold(
       appBar: AppBar(title: Text(widget.title)),
       body: Center(
+        child: ValueListenableBuilder(
+            valueListenable: controller,
+            builder: (context, value, _) {
+              return ListView.builder(
+                itemCount: value.length,
+                itemBuilder: (context, index) {
+                  final item = value[index];
+                  return Row(
+                    children: [
+                      Checkbox(
+                        value: item.isChecked,
+                        onChanged: (value) {
+                          if (value != null) {
+                            setState(() {
+                              controller.checkItem(index, value);
+                            });
+                          }
+                        },
+                      ),
+                      const SizedBox(width: 4),
+                      Text(item.name)
+                    ],
+                  );
+                },
+              );
+            }),
+      ),
+      floatingActionButton: Align(
+        alignment: Alignment.bottomRight,
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            const Text(
-              'You have pushed the button this many times:',
-            ),
-            FutureBuilder<int>(
-              future: _value,
-              builder: (_, snapshot) => Text(
-                (snapshot.data ?? 0).toString(),
-                style: Theme.of(context).textTheme.headlineMedium,
-              ),
-            ),
-            TextButton(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            FloatingActionButton(
               onPressed: () async {
-                await _clear();
                 setState(() {});
               },
-              child: const Text('Clear'),
+              tooltip: 'Increment',
+              child: const Text("Clear"),
+            ),
+            const SizedBox(height: 8),
+            FloatingActionButton(
+              onPressed: () async {
+                showModalBottomSheet(
+                  context: context,
+                  constraints: const BoxConstraints(minHeight: 300),
+                  builder: (context) {
+                    final TextEditingController textEditingController =
+                        TextEditingController();
+                    return Column(
+                      children: [
+                        const Text('Add Item'),
+                        TextField(controller: textEditingController),
+                        ElevatedButton(
+                          onPressed: () {
+                            controller.addItem(
+                              ItemTask(
+                                isChecked: false,
+                                name: textEditingController.text,
+                              ),
+                            );
+                            Navigator.of(context).pop();
+                            textEditingController.clear();
+                          },
+                          child: const Text(
+                            'Add',
+                          ),
+                        )
+                      ],
+                    );
+                  },
+                );
+              },
+              tooltip: 'Increment',
+              child: const Icon(Icons.add),
             ),
           ],
         ),
       ),
-      floatingActionButton: const FloatingActionButton(
-        onPressed: _increment,
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
-      ),
     );
   }
+}
+
+class ItemTask {
+  final bool isChecked;
+  final String name;
+
+  ItemTask({
+    required this.isChecked,
+    required this.name,
+  });
 }

@@ -3,24 +3,21 @@ package com.example.home_widgets_flutter
 import HomeWidgetGlanceState
 import HomeWidgetGlanceStateDefinition
 import android.content.Context
-import android.graphics.drawable.Icon
-import android.view.RoundedCorner
+import android.content.SharedPreferences
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.glance.GlanceId
 import androidx.glance.GlanceModifier
-import androidx.glance.IconImageProvider
 import androidx.glance.Image
 import androidx.glance.ImageProvider
 import androidx.glance.appwidget.CheckBox
 import androidx.glance.appwidget.GlanceAppWidget
 import androidx.glance.appwidget.cornerRadius
+import androidx.glance.appwidget.lazy.LazyColumn
 import androidx.glance.appwidget.provideContent
 import androidx.glance.background
-import androidx.glance.color.ColorProvider
-
 import androidx.glance.currentState
 import androidx.glance.layout.Alignment
 import androidx.glance.layout.Box
@@ -35,20 +32,39 @@ import androidx.glance.layout.size
 import androidx.glance.layout.width
 import androidx.glance.text.Text
 import androidx.glance.text.TextStyle
+import org.json.JSONArray
 
+data class ItemTask(val name: String, val isChecked: Boolean) {
+}
 class ListviewGlanceWidget : GlanceAppWidget() {
     override val stateDefinition = HomeWidgetGlanceStateDefinition()
 
     override suspend fun provideGlance(context: Context, id: GlanceId) {
         provideContent {
-            GlaceListview()
+            GlaceListview(context, currentState())
         }
+    }
+    private fun getTodos(data: SharedPreferences):List<ItemTask>{
+        val jsonData = data.getString("task", "[]")
+        val jsonArray = JSONArray(jsonData)
+        val itemTaskList = mutableListOf<ItemTask>()
+        for (i in 0 until jsonArray.length()) {
+            val jsonObject = jsonArray.getJSONObject(i)
+            val mapItem = ItemTask(
+                name = jsonObject.getString("name"),
+                isChecked = jsonObject . getBoolean ("checked")
+            )
+            itemTaskList.add(mapItem)
+        }
+        print("passou aqui")
+        print(itemTaskList.size)
+        return itemTaskList
     }
 
     @Composable
-    private fun GlaceListview() {
-        val items = listOf("Item 1", "Item 2", "Item 3", "Item 4")
-
+    private fun GlaceListview(context: Context, currentState: HomeWidgetGlanceState) {
+        val data = currentState.preferences
+        val itemsTasks  =   getTodos(data)
         Box(
             modifier = GlanceModifier.background(Color(0xFFFFFFFF)).fillMaxWidth()
         )
@@ -59,7 +75,7 @@ class ListviewGlanceWidget : GlanceAppWidget() {
                     horizontalAlignment = Alignment.CenterHorizontally
 
                 ) {
-                    items.forEachIndexed { index, item ->
+                    itemsTasks.forEachIndexed { index, item ->
                         Box(
                             modifier = GlanceModifier
                                 .height(69.dp)
@@ -92,7 +108,7 @@ class ListviewGlanceWidget : GlanceAppWidget() {
                                 )
                             }
                         }
-                        if (index != items.size - 1) {
+                        if (index != itemsTasks.size - 1) {
                             Spacer(modifier = GlanceModifier.padding(8.dp))
                         }
                     }
@@ -114,10 +130,11 @@ class ListviewGlanceWidget : GlanceAppWidget() {
                         Text("Hoje", style = TextStyle(fontSize = 18.sp))
                     }
                 }
-                Column(
+                LazyColumn(
                     horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    items.forEachIndexed { index, item ->
+                  items(itemsTasks.size){index->
+
                         Row(
                             verticalAlignment = Alignment.CenterVertically,
                             modifier = GlanceModifier
@@ -125,10 +142,10 @@ class ListviewGlanceWidget : GlanceAppWidget() {
                                 .fillMaxWidth()
                                 .padding(horizontal = 16.dp),
 
-                        ) {
+                            ) {
 
-                            CheckBox(checked = true, onCheckedChange = {})
-                            Text("task de teste")
+                            CheckBox(checked = itemsTasks[index].isChecked, onCheckedChange = {})
+                            Text(itemsTasks[index].name)
                             Spacer(GlanceModifier.defaultWeight())
                             Image(
                                 provider = ImageProvider(R.drawable.sun),
@@ -148,21 +165,26 @@ class ListviewGlanceWidget : GlanceAppWidget() {
 
                         }
 
-                        if (index != items.size - 1) {
-                            Box(
-                                modifier = GlanceModifier
-                                    .height(1.dp)
-                                    .fillMaxWidth()
-                                    .background(Color(0xFFF2F4F7))
-                            ) {
-                            }
-                        }
+//                        if (index != itemsTasks.size - 1) {
+//                            Box(
+//                                modifier = GlanceModifier
+//                                    .height(1.dp)
+//                                    .fillMaxWidth()
+//                                    .background(Color(0xFFF2F4F7))
+//                            ) {
+//                            }
+//                        }
+                    }
                     }
                 }
             }
         }
     }
-}
+
+
+
+
+
 
 
 

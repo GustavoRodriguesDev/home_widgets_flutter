@@ -11,12 +11,13 @@ class IncrementAction : ActionCallback {
     override suspend fun onAction(context: Context, glanceId: GlanceId, parameters: ActionParameters) {
         val backgroundIntent = HomeWidgetBackgroundIntent.getBroadcast(
             context,
-            Uri.parse("homeWidgetCounter://increment"))
+            Uri.parse("homeWidgetCounter://increment/"))
         backgroundIntent.send()
     }
 }
 
-class ClearAction : ActionCallback {
+class ClearAction(val asd: String) : ActionCallback {
+
     override suspend fun onAction(context: Context, glanceId: GlanceId, parameters: ActionParameters) {
         val backgroundIntent = HomeWidgetBackgroundIntent.getBroadcast(
             context,
