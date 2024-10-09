@@ -12,8 +12,13 @@ void main() async {
 @pragma('vm:entry-point')
 Future<void> interactiveCallback(Uri? uri) async {
   // We check the host of the uri to determine which action should be triggered.
-  if (uri?.host == 'checkItem') {
-    checkItem();
+  if (uri?.host == 'checkitem') {
+    final index = int.tryParse(
+          uri!.pathSegments.first.replaceAll('[', '').replaceAll(']', ''),
+        ) ??
+        -1;
+
+    await checkItem(index, true);
   }
 }
 
@@ -81,6 +86,7 @@ Future<void> sendItensTasks(List<ItemTask> itens) async {
 /// Stores [value] in the Widget Configuration
 Future<void> _sendAndUpdate(List<Map<String, dynamic>> item) async {
   await HomeWidget.saveWidgetData(_countKey, jsonEncode(item));
+  await TaskController.instance.getItens();
 
   await HomeWidget.updateWidget(
     androidName: 'ListviewGlanceWidgetReceiver',
@@ -88,7 +94,8 @@ Future<void> _sendAndUpdate(List<Map<String, dynamic>> item) async {
 }
 
 class TaskController extends ValueNotifier<List<ItemTask>> {
-  TaskController() : super([]);
+  TaskController._() : super([]);
+  static final TaskController instance = TaskController._();
 
   Future<void> addItem(ItemTask itemTask) async {
     final itemList = await fetchItensTasks();
@@ -102,6 +109,11 @@ class TaskController extends ValueNotifier<List<ItemTask>> {
   Future<void> getItens() async {
     final itemList = await fetchItensTasks();
     value = itemList;
+  }
+
+  Future<void> checkItems(int index, bool chcked) async {
+    await checkItem(index, chcked);
+    await getItens();
   }
 }
 
@@ -131,20 +143,12 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
-  final controller = TaskController();
+  final controller = TaskController.instance;
   @override
   void initState() {
     super.initState();
     controller.getItens();
     WidgetsBinding.instance.addObserver(this);
-  }
-
-  @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
-    super.didChangeAppLifecycleState(state);
-    if (state == AppLifecycleState.resumed) {
-      setState(() {});
-    }
   }
 
   @override
@@ -172,7 +176,7 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
                         onChanged: (value) {
                           if (value != null) {
                             setState(() {
-                              controller.checkItem(index, value);
+                              controller.checkItems(index, value);
                             });
                           }
                         },
@@ -192,7 +196,7 @@ class _MyHomePageState extends State<MyHomePage> with WidgetsBindingObserver {
           children: [
             FloatingActionButton(
               onPressed: () async {
-                setState(() {});
+                controller.getItens();
               },
               tooltip: 'Increment',
               child: const Text("Clear"),

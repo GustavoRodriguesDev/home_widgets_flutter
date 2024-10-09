@@ -16,7 +16,7 @@ class IncrementAction : ActionCallback {
     }
 }
 
-class ClearAction(val asd: String) : ActionCallback {
+class ClearAction() : ActionCallback {
 
     override suspend fun onAction(context: Context, glanceId: GlanceId, parameters: ActionParameters) {
         val backgroundIntent = HomeWidgetBackgroundIntent.getBroadcast(
