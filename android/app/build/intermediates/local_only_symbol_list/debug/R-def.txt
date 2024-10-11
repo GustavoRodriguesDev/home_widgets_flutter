@@ -1,0 +1,34 @@
+R_DEF: Internal format may change without notice
+local
+attr? appWidgetInnerRadius
+attr? appWidgetPadding
+attr? appWidgetRadius
+color light_blue_200
+color light_blue_50
+color light_blue_600
+color light_blue_900
+dimen widget_margin
+drawable app_widget_background
+drawable app_widget_inner_view_background
+drawable clock
+drawable example_appwidget_preview
+drawable goat_image
+drawable launch_background
+drawable notes_icon
+drawable shopping_icon
+drawable sun
+drawable task_icon
+mipmap ic_launcher
+string add_widget
+string app_widget_description
+string appwidget_text
+style LaunchTheme
+style NormalTheme
+style Theme.Android.AppWidgetContainer
+style Theme.Android.AppWidgetContainerParent
+style Widget.Android.AppWidget.Container
+style Widget.Android.AppWidget.InnerView
+styleable AppWidgetAttrs appWidgetPadding appWidgetInnerRadius appWidgetRadius
+xml counter_glace_widget
+xml image_paths
+xml listview_info

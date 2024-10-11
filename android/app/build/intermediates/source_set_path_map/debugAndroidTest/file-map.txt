@@ -1,0 +1,4 @@
+com.example.home_widgets_flutter.test.app-androidTest-0 /Users/Guilherme/Documents/Dev/home_widgets_flutter/android/app/build/generated/res/resValues/androidTest/debug
+com.example.home_widgets_flutter.test.app-mergeDebugAndroidTestResources-1 /Users/Guilherme/Documents/Dev/home_widgets_flutter/android/app/build/intermediates/incremental/debugAndroidTest/mergeDebugAndroidTestResources/merged.dir
+com.example.home_widgets_flutter.test.app-mergeDebugAndroidTestResources-2 /Users/Guilherme/Documents/Dev/home_widgets_flutter/android/app/build/intermediates/incremental/debugAndroidTest/mergeDebugAndroidTestResources/stripped.dir
+com.example.home_widgets_flutter.test.app-merged_res-3 /Users/Guilherme/Documents/Dev/home_widgets_flutter/android/app/build/intermediates/merged_res/debugAndroidTest

@@ -1,0 +1,78 @@
+[
+    {
+        "merged": "/Users/Guilherme/.gradle/daemon/8.4/com.example.home_widgets_flutter.app-merged_res-49:/drawable-v21_launch_background.xml.flat",
+        "source": "/Users/Guilherme/.gradle/daemon/8.4/com.example.home_widgets_flutter.app-main-51:/drawable-v21/launch_background.xml"
+    },
+    {
+        "merged": "/Users/Guilherme/.gradle/daemon/8.4/com.example.home_widgets_flutter.app-merged_res-49:/drawable-v21_app_widget_background.xml.flat",
+        "source": "/Users/Guilherme/.gradle/daemon/8.4/com.example.home_widgets_flutter.app-main-51:/drawable-v21/app_widget_background.xml"
+    },
+    {
+        "merged": "/Users/Guilherme/.gradle/daemon/8.4/com.example.home_widgets_flutter.app-merged_res-49:/drawable_sun.png.flat",
+        "source": "/Users/Guilherme/.gradle/daemon/8.4/com.example.home_widgets_flutter.app-main-51:/drawable/sun.png"
+    },
+    {
+        "merged": "/Users/Guilherme/.gradle/daemon/8.4/com.example.home_widgets_flutter.app-merged_res-49:/drawable_goat_image.jpg.flat",
+        "source": "/Users/Guilherme/.gradle/daemon/8.4/com.example.home_widgets_flutter.app-main-51:/drawable/goat_image.jpg"
+    },
+    {
+        "merged": "/Users/Guilherme/.gradle/daemon/8.4/com.example.home_widgets_flutter.app-merged_res-49:/drawable-nodpi_example_appwidget_preview.png.flat",
+        "source": "/Users/Guilherme/.gradle/daemon/8.4/com.example.home_widgets_flutter.app-main-51:/drawable-nodpi/example_appwidget_preview.png"
+    },
+    {
+        "merged": "/Users/Guilherme/.gradle/daemon/8.4/com.example.home_widgets_flutter.app-merged_res-49:/mipmap-xhdpi_ic_launcher.png.flat",
+        "source": "/Users/Guilherme/.gradle/daemon/8.4/com.example.home_widgets_flutter.app-main-51:/mipmap-xhdpi/ic_launcher.png"
+    },
+    {
+        "merged": "/Users/Guilherme/.gradle/daemon/8.4/com.example.home_widgets_flutter.app-merged_res-49:/mipmap-hdpi_ic_launcher.png.flat",
+        "source": "/Users/Guilherme/.gradle/daemon/8.4/com.example.home_widgets_flutter.app-main-51:/mipmap-hdpi/ic_launcher.png"
+    },
+    {
+        "merged": "/Users/Guilherme/.gradle/daemon/8.4/com.example.home_widgets_flutter.app-merged_res-49:/mipmap-mdpi_ic_launcher.png.flat",
+        "source": "/Users/Guilherme/.gradle/daemon/8.4/com.example.home_widgets_flutter.app-main-51:/mipmap-mdpi/ic_launcher.png"
+    },
+    {
+        "merged": "/Users/Guilherme/.gradle/daemon/8.4/com.example.home_widgets_flutter.app-merged_res-49:/drawable_notes_icon.png.flat",
+        "source": "/Users/Guilherme/.gradle/daemon/8.4/com.example.home_widgets_flutter.app-main-51:/drawable/notes_icon.png"
+    },
+    {
+        "merged": "/Users/Guilherme/.gradle/daemon/8.4/com.example.home_widgets_flutter.app-merged_res-49:/mipmap-xxxhdpi_ic_launcher.png.flat",
+        "source": "/Users/Guilherme/.gradle/daemon/8.4/com.example.home_widgets_flutter.app-main-51:/mipmap-xxxhdpi/ic_launcher.png"
+    },
+    {
+        "merged": "/Users/Guilherme/.gradle/daemon/8.4/com.example.home_widgets_flutter.app-merged_res-49:/xml_counter_glace_widget.xml.flat",
+        "source": "/Users/Guilherme/.gradle/daemon/8.4/com.example.home_widgets_flutter.app-main-51:/xml/counter_glace_widget.xml"
+    },
+    {
+        "merged": "/Users/Guilherme/.gradle/daemon/8.4/com.example.home_widgets_flutter.app-merged_res-49:/drawable_shopping_icon.png.flat",
+        "source": "/Users/Guilherme/.gradle/daemon/8.4/com.example.home_widgets_flutter.app-main-51:/drawable/shopping_icon.png"
+    },
+    {
+        "merged": "/Users/Guilherme/.gradle/daemon/8.4/com.example.home_widgets_flutter.app-merged_res-49:/drawable-v21_app_widget_inner_view_background.xml.flat",
+        "source": "/Users/Guilherme/.gradle/daemon/8.4/com.example.home_widgets_flutter.app-main-51:/drawable-v21/app_widget_inner_view_background.xml"
+    },
+    {
+        "merged": "/Users/Guilherme/.gradle/daemon/8.4/com.example.home_widgets_flutter.app-merged_res-49:/xml_image_paths.xml.flat",
+        "source": "/Users/Guilherme/.gradle/daemon/8.4/com.example.home_widgets_flutter.app-main-51:/xml/image_paths.xml"
+    },
+    {
+        "merged": "com.example.home_widgets_flutter.app-merged_res-49:/xml_image_paths.xml.flat",
+        "source": "com.example.home_widgets_flutter.app-main-51:/xml/image_paths.xml"
+    },
+    {
+        "merged": "/Users/Guilherme/.gradle/daemon/8.4/com.example.home_widgets_flutter.app-merged_res-49:/xml_listview_info.xml.flat",
+        "source": "/Users/Guilherme/.gradle/daemon/8.4/com.example.home_widgets_flutter.app-main-51:/xml/listview_info.xml"
+    },
+    {
+        "merged": "/Users/Guilherme/.gradle/daemon/8.4/com.example.home_widgets_flutter.app-merged_res-49:/drawable_clock.png.flat",
+        "source": "/Users/Guilherme/.gradle/daemon/8.4/com.example.home_widgets_flutter.app-main-51:/drawable/clock.png"
+    },
+    {
+        "merged": "/Users/Guilherme/.gradle/daemon/8.4/com.example.home_widgets_flutter.app-merged_res-49:/mipmap-xxhdpi_ic_launcher.png.flat",
+        "source": "/Users/Guilherme/.gradle/daemon/8.4/com.example.home_widgets_flutter.app-main-51:/mipmap-xxhdpi/ic_launcher.png"
+    },
+    {
+        "merged": "/Users/Guilherme/.gradle/daemon/8.4/com.example.home_widgets_flutter.app-merged_res-49:/drawable_task_icon.png.flat",
+        "source": "/Users/Guilherme/.gradle/daemon/8.4/com.example.home_widgets_flutter.app-main-51:/drawable/task_icon.png"
+    }
+]

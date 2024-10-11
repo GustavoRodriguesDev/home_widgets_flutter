@@ -1,0 +1,4 @@
+#Wed Oct 09 10:24:28 BRT 2024
+base.0=/Users/Guilherme/Documents/Dev/home_widgets_flutter/android/app/build/intermediates/dex/debugAndroidTest/mergeProjectDexDebugAndroidTest/0/classes.dex
+path.0=0/classes.dex
+renamed.0=classes.dex
